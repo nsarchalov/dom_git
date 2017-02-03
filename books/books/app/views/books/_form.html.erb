@@ -35,6 +35,11 @@
       <%= f.collection_select :category_id, Category.all, :id, :name %>
     </div>
 
+    <div>
+      <%= f.label :user %><br />
+      <%= f.collection_select :user_id, User.all, :id, :first_name %>
+    </div>
+
 
     <div>
       <%= f.submit %>

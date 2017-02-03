@@ -14,4 +14,7 @@ class User < ApplicationRecord
   def to_s
   	"#{first_name} #{username}"
   end
+
+  has_many :books
+  has_many :categories
 end
