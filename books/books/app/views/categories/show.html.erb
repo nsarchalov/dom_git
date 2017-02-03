@@ -1,0 +1,8 @@
+Name: <h1><%= @category.name %></h1>
+
+<% @category.books.each do |book| %>
+	<b><%= link_to book.title, book_path(book) %></b>
+	<p><%= image_tag "/uploads/#{book.id}", weght: 100, height: 150 %></p>
+	<p><%= book.author %></p>
+	<p><%= book.year %></p>
+<% end %>

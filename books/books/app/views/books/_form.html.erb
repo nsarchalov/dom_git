@@ -1,0 +1,42 @@
+<%= form_for :book, url: books_path do |f| %>
+    <% if @book.errors.any? %>
+            <div class="errors">
+              Total errors: <%= @book.errors.count %>
+              <ul>
+                <% @book.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+    <% end %>
+
+    <div>
+      <%= f.label :title %><br />
+      <%= f.text_field :title %>
+    </div>
+
+    <div>
+      <%= f.label :picture %><br />
+      <%= f.file_field :picture %>
+    </div>
+
+    <div>
+      <%= f.label :author %><br />
+      <%= f.text_field :author %>
+    </div>
+
+    <div>
+      <%= f.label :year %><br />
+      <%= f.text_field :year %>
+    </div>
+
+    <div>
+      <%= f.label :category %><br />
+      <%= f.collection_select :category_id, Category.all, :id, :name %>
+    </div>
+
+
+    <div>
+      <%= f.submit %>
+    </div>
+<% end %>

@@ -1,0 +1,22 @@
+<%= form_for :category, url: categories_path do |f| %>
+
+    <% if @category.errors.any? %>
+        <div class="errors">
+          Total errors: <%= @category.errors.count %>
+          <ul>
+            <% @category.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div>
+      <%= f.submit %>
+    </div>
+<% end %>
