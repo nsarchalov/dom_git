@@ -54,7 +54,6 @@ class BooksController < ApplicationController
 
   	unless uploaded_file.nil?
 	  new_file_path = Rails.root.join('public', 'uploads', @book.id.to_s)
-
 	  File.open(new_file_path, 'wb') do |file|
 	  file.write uploaded_file.read
 	  end
