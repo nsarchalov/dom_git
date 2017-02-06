@@ -17,4 +17,7 @@ class User < ApplicationRecord
 
   has_many :books
   has_many :categories
+
+  has_many  :book, through: :favorites
+  
 end

@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :set_book, only:[:edit, :update, :show, :destroy]
+  before_action :require_same_user, only:[:edit, :update, :destroy]
 
   def new
   	@book = Book.new
@@ -6,6 +8,7 @@ class BooksController < ApplicationController
 
   def create
  	@book = Book.new(book_params)
+  @book.user = current_user 
     if @book.save
       upload_picture
       redirect_to @book
@@ -16,19 +19,16 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
+    @favorite = Favorite.new
   end
 
   def show
-    @book = Book.find(params[:id])
   end
 
   def edit
-    @book = Book.find(params[:id])
   end
 
   def update
-    @book = Book.find(params[:id])
-
     if @book.update(book_params)
       upload_picture
       redirect_to @book
@@ -38,12 +38,23 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book = Book.destroy(params[:id])
+    @book.destroy
 
     redirect_to books_path
   end
 
   private
+
+  def set_book
+      @book = Book.find(params[:id])
+  end
+
+  def require_same_user
+      if current_user != @book.user && !current_user.admin?
+        flash[:danger] = "You can only edit your books"
+        redirect_to root_path
+      end
+  end
 
   def book_params
     params.require(:book).permit(:title, :author, :year, :category_id, :user_id)

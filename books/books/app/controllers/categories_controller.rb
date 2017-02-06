@@ -1,13 +1,14 @@
 class CategoriesController < ApplicationController
+  before_action :set_category, only:[:edit, :update, :show, :destroy]
+  before_action :require_same_user, only:[:edit, :update, :destroy]
 
-  
   def new
     @category = Category.new
   end
 
   def create
     @category = Category.new(category_params)
-
+    @category.user = current_user
     if @category.save
       redirect_to categories_path
     else
@@ -21,16 +22,12 @@ class CategoriesController < ApplicationController
 
 
   def show
-    @category = Category.find(params[:id])
   end
 
   def edit
-    @category = Category.find(params[:id])
   end
 
   def update
-    @category = Category.find(params[:id])
-
     if @category.update(category_params)
       redirect_to @category
     else
@@ -39,10 +36,24 @@ class CategoriesController < ApplicationController
   end
   
   def destroy
-    @category = Category.destroy(params[:id])
+    @category.destroy
     
     redirect_to categories_path
   end
+
+  private 
+
+  def set_category
+      @category = Category.find(params[:id])
+  end
+
+  def require_same_user
+      if current_user != @category.user && !current_user.admin?
+        flash[:danger] = "You can only edit your articles"
+        redirect_to root_path
+      end
+  end
+
 
   def category_params
     params.require(:category).permit(:name, :user_id)

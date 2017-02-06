@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  resources :favorites
   resources	:sessions, only: [:new, :create, :destroy]
 
   get 'signup', to: 'users#new', as: 'signup'
@@ -14,4 +16,5 @@ Rails.application.routes.draw do
 
   resources :categories
   
+  post 'add_favorites', to: 'favorites#create', as: 'add_favorite'
 end

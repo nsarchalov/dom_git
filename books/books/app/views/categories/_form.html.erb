@@ -15,12 +15,7 @@
       <%= f.label :name %>
       <%= f.text_field :name %>
     </div>
-
-    <div>
-      <%= f.label :user %><br />
-      <%= f.collection_select :user_id, User.all, :id, :first_name %>
-    </div>
-
+    <br>
     <div>
       <%= f.submit %>
     </div>

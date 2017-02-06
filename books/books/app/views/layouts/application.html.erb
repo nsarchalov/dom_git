@@ -25,16 +25,10 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#"><%= link_to 'Books', books_path %></a></li>
-	        <li><a href="#"><%= link_to 'Categories', categories_path %></a></li>
-	        <li><a href="#"></a></li>
-			  <% if current_user %>
-				  <li><a href="#"><%= link_to "Log Out", logout_path %></a></li>
-			  <% else %>
-			  	  <li><a href="#"></a></li><%= link_to "Sign Up", signup_path %> or </a></li>
-			  	  <li><a href="#"></a></li><%= link_to "Log In", login_path %></a></li>
-			  <% end %>
-			  </a></li>
+	        <li class="active"><%= link_to 'Books', books_path %></li>
+	        <li><%= link_to 'Categories', categories_path %></li>
+	        <li><%= link_to 'My favorites', favorites_path %></li>
+			
 
 	  <% flash.each do |key, value| %>
 	  	<%= content_tag(:div, class: "alert alert-#{key}") do %>
@@ -42,6 +36,15 @@
 	  	<% end %>
 	  <% end %>
 	      </ul>
+	      <div class="pull-right">
+
+	        <% if current_user %>
+				<%= link_to "Log Out", logout_path, class: "btn btn-primary" %>
+			  <% else %>
+			  <%= link_to "Sign Up", signup_path, class: "btn btn-default" %>
+			  <%= link_to "Log In", login_path, class: "btn btn-default" %>
+			  <% end %>
+		  </div>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>

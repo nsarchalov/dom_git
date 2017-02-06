@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only:[:edit, :update, :show]
+  before_action :require_same_user, only:[:edit, :update, :destroy]
 
   # GET /users
   def index
@@ -24,6 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:user_id] = @user.id
       redirect_to @user, notice: 'User was successfully created.'
     else
       render :new
@@ -49,6 +51,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def require_same_user
+      if current_user != @user
+        flash[:danger] = "You can only edit your article"
+        redirect_to root_path
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
