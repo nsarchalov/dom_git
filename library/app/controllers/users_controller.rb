@@ -1,14 +1,23 @@
 class UsersController < ApplicationController
-  before_action :set_user, only:[:edit, :update, :show]
+  before_action :set_user, only:[:edit, :update]
   before_action :require_same_user, only:[:edit, :update, :destroy]
 
   # GET /users
   def index
     @users = User.all
+    @favorites = Favorite.all
   end
 
   # GET /users/1
   def show
+    @nurlan = Favorite.all
+  end
+
+  def favorite
+    @favorite = Favorite.new
+    @favorite.book_id = params[:book_id]
+    @favorite.user = params[:user_id]
+    @favorite.save
   end
 
   # GET /users/new
