@@ -44,7 +44,7 @@ class CategoriesController < ApplicationController
   private 
 
   def set_category
-      @category = Category.find(params[:id])
+    @category = Category.find(params[:id])
   end
 
   def require_same_user
@@ -53,7 +53,6 @@ class CategoriesController < ApplicationController
         redirect_to root_path
       end
   end
-
 
   def category_params
     params.require(:category).permit(:name, :user_id)
